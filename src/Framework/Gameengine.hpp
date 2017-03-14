@@ -6,7 +6,7 @@
 #include "Time.hpp"
 #include "Window.hpp"
 
-class CGameState;
+class GameState;
 
 #define MS_PER_UPDATE 16
 #define SCREEN_SIZE_X 1920
@@ -16,18 +16,19 @@ class CGameEngine
 {
 public:
 
-	//the scale factor for sprites
-	static float m_ScaleFactor;
-
 	void Init(std::string const &_name);
 	void Run();
 	void Quit();
 
 	//changes the current state and deletes the whole stack
-	void ChangeState(CGameState* _state);
+	void ChangeState(GameState* _state);
+
+	void ChangeStateImmediately(GameState* _state);
 
 	//pushes a new state to the stack
-	void PushState(CGameState* _state);
+	void PushState(GameState* _state);
+
+	void PushStateImmediately(GameState* _state);
 
 	//pops the last state of the stack
 	void PopState();
@@ -60,14 +61,15 @@ public:
 
 private:
 	// the stack of states
-	std::vector<CGameState*> m_pStates;
+	std::vector<GameState*> m_pStates;
 
 	//the window
 	CWindow m_Window;
 
 	bool m_running;
 
-	bool m_popState;     //true if the last state needs to be popped
+	GameState *nextGameState;
+	enum class action {hold, push, pop, change} nextAction;
 
 	//clears all states
 	void ClearStates();

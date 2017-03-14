@@ -9,7 +9,6 @@ void CInitialState::Init(CGameEngine *_engine)
 
 	//Loads the background
 	m_Background.Load(g_pTextures->t_backgroundLoadingScreen);
-	m_Background.SetScale(m_pGameEngine->m_ScaleFactor, m_pGameEngine->m_ScaleFactor);
 }
 
 
@@ -49,7 +48,7 @@ void CInitialState::Update()
 	g_pSounds->LoadSounds();
 	g_pStringContainer->LoadStrings(CStringContainer::Languages::German);
 
-	m_pGameEngine->ChangeState(new CMainMenu());
+	m_pGameEngine->ChangeStateImmediately(new CMainMenu());
 }
 
 
